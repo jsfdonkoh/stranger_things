@@ -1,19 +1,29 @@
 import React, { useState } from "react";
 
 
- export const PostForm = () => {
+ export const PostForm = ({savedToken, setPosts}) => {
     const [title, setTitle] = useState ('');
     const [description, setDescription] = useState ('');
     const [price, setPrice] = useState('');
-    const [willDeliver, setWillDeliver] =useState('');
+    const [willDeliver, setWillDeliver] =useState(false);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(`Tile: ${title}`);
         console.log(`Description: ${description}`);
         console.log(`Price: ${price}`);
         console.log(`WillDeliver: ${willDeliver}`);
         
+        const newPost = {title, description, price, willDeliver:willDeliver}
+        await SavePost(savedToken, newPost)
+
+            try {
+                const response = await fetch(`https://strangers-things.herokuapp.com/api/2211-FTB-ET-WEB-PT/posts`)
+                    let result = await response.json()
+                    setPosts(result.data.posts)      
+            } catch(err) {
+                console.error(err)
+            }
       };
 
       return(
@@ -26,7 +36,7 @@ import React, { useState } from "react";
           type="text"
           id="title"
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={(e) => {setTitle(e.target.value)}}
         />
             </div>
             <div>
@@ -35,7 +45,7 @@ import React, { useState } from "react";
             type="text"
             id="description"
             value={description}
-            onChange= {(e) => setDescription(e.target.value)}
+            onChange= {(e) => {setDescription(e.target.value)}}
             />
             </div>
             <div>
@@ -44,22 +54,53 @@ import React, { useState } from "react";
                 type="text"
                 id="price"
                 value={price}
-                onChange = {(e) => setPrice(e.target.value)}
+                onChange = {(e) => {setPrice(e.target.value)}}
                 />
                 </div>
                 <div>
                     <label htmlFor="willDeliver">willDeliver</label>
-                    <input
-                    type="text"
+                    <select
+                    type="boolean"
                     id="willDeliver"
                     value={willDeliver}
-                    onChange = {(e) => setWillDeliver(e.target.value)}
-                    />
+                    onChange = {(e) => {setWillDeliver(e.target.value)}}
+                    >
+                    < option value = "Yes">
+                      Yes
+                    </option>
+                    <option value = "No">
+                      No
+                    </option> 
+                    </select>
                 </div>
                 <button type="submit">Submit</button>
         </form>
       );
  }
+
+ export const SavePost = async (token, newPost) => {
+  try{     
+    const response = await fetch(`https://strangers-things.herokuapp.com/api/2211-FTB-ET-WEB-PT/posts`, {
+  method: "POST",
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
+  },
+  body: JSON.stringify({
+    post: {
+      title: newPost.title,
+      description: newPost.description,
+      price: newPost.price,
+      willDeliver: newPost.willDeliver
+    }
+  })
+  });
+    const result = await response.json();
+    return result
+  } catch (err) {
+    console.error(err);
+    }
+};
 
     export const makePost = async (POST_ID, BASE_URL, TOKEN_STRING_HERE) => {
 

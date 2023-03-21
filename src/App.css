@@ -51,7 +51,7 @@ code {
     monospace;
 }
 
-button {
+ .login, .register, .LOGOUT, .home, .profile {
   list-style-type: georgian;
   display: flex;
   flex-direction: row;
@@ -100,11 +100,21 @@ h2 {
   min-height: 70vh;
 }
 
+.row {
+  display : flex;
+  flex-direction: row;
+}
+
 .row aside {
-  flex:1
+  display: flex;
+  flex: 1;
+  background-color: blueviolet
+ 
+
 }
 
 header,
 footer {
   height:15vh
 }
+

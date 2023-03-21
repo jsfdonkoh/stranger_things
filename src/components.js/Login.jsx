@@ -23,7 +23,7 @@ export default function Login ({ setToken}) {
                 })
             }).then (response => response.json())
             .then (result => {
-                console.log(result);
+                console.log('This is the login result', result);
                 localStorage.setItem ('token', result.data.token);
             })
             .catch(console.error);
@@ -32,6 +32,9 @@ export default function Login ({ setToken}) {
         }
         return (
             <form onSubmit={(event) => loginUser(event)}>
+                <h4>
+                    Log Into Account
+                </h4>
                 <label> Username:</label>
                 <input
                 type="text"

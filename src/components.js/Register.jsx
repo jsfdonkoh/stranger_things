@@ -23,7 +23,7 @@ export default function Register ({ token}) {
                 })
             }).then (response => response.json())
             .then (result => {
-                console.log(result);
+                console.log('This is the register result', result);
                 localStorage.setItem ('token', result.data.token);
             })
             .catch(console.error);
@@ -32,13 +32,16 @@ export default function Register ({ token}) {
         }
         return (
             <form onSubmit={(event) => registerUser(event)}>
-                <label> Username:</label>
+                <h4>
+                    Register New Account
+                </h4>
+                <label> New Username:</label>
                 <input
                 type="text"
                 value={userName}
                 onChange={(event) => setNewUserName(event.target[0])}
                 ></input>
-                <label> Password:</label>
+                <label> New Password:</label>
                 <input
                 type="password"
                 value={passWord}

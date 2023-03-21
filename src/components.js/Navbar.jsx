@@ -1,32 +1,23 @@
-// import React from "react";
-
-//  const Navbar = () => {
-//     return (
-//         <h3> Navbar</h3>
-//     )}
-
-//  export default Navbar 
 
 import React from 'react';
 import { Routes, Route, Link } from "react-router-dom";
-import { Register, Login } from '.';
+import { Register, Login, Posts } from '.';
 import App, { token } from '../App';
 
-export const NavBar = ({logout}) => {
+export const Navbar = ({logout, token}) => {
 
     return (
         <>
         <div className='navigation'>
-            <Link className='homeTab' to='/Header'>Home</Link>
-            {/* <Link className='profileTab' to='/Profile'>Profile</Link> */}
-            <Link className='registerTab' to='/Register'>Register</Link>
-            <Link className='loginTab' to='/Login'>Login</Link>
-            <Link className='logout' onClick={(event) => logout(event)}>Log Out</Link>
+            <Link className='home' to='/'>Home</Link>
+            <Link className='register' to='/Register'>Register</Link>
+            <Link className='login' to='/Login'>Login</Link>
+            <Link className='LOGOUT' onClick={(event) => logout(event)}>Log Out</Link>
+            
         </div>
             <Routes>
                 
-                    <Route path='/Home' element={<App/>}/>
-                    {/* <Route path='/Profile' element={<Profile token={token} />}/> */}
+                    <Route path='/Home' element={<Posts/>}/>
                     <Route path='/Register' element={<Register/>}/>
                     <Route path='/Login' element={<Login/>}/>
                     
@@ -35,4 +26,4 @@ export const NavBar = ({logout}) => {
     )
 };
 
-export default NavBar;
+export default Navbar;
